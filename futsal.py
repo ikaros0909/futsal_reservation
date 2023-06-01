@@ -27,14 +27,14 @@ driver.find_element(By.XPATH, '/html/body/div/div/div/div[3]/div/div/div/div[2]/
 driver.implicitly_wait(5)
 
 current_time = datetime.datetime.now()
-last_day_of_month = datetime.datetime(current_time.year, current_time.month, 1) + datetime.timedelta(days=32)
-last_day_of_month = last_day_of_month.replace(day=1) - datetime.timedelta(days=1)
+last_day_of_month = datetime.datetime(current_time.year, current_time.month, 1) + datetime.timedelta(days=32) # 다음달 1일
+last_day_of_month = last_day_of_month.replace(day=1) - datetime.timedelta(days=1) # 다음달 1일에서 하루를 빼서 이번달 말일을 구함
 
 checked_process = False
 while True:
     current_time = datetime.datetime.now()
-    if current_time > last_day_of_month.replace(hour=23, minute=59, second=59):
-        # 매월 말일 자정을 넘겼을 때 수행할 작업
+    if current_time.day == 1 or current_time > last_day_of_month.replace(hour=23, minute=59, second=59):
+        # 현재가 1일이거나, 매월 말일 자정을 넘겼을 때 수행할 작업
         checked_process = True
         print("매월 말일 자정을 넘겼습니다. 예약작업을 수행합니다.")
         break
@@ -56,15 +56,15 @@ if checked_process == True:
         try:
             # 대관예약
             driver.find_element(By.XPATH, '/html/body/div/div/div/section/div/ul/li[3]/a').click()
-            driver.implicitly_wait(5)
+            driver.implicitly_wait(10)
 
             # 5구장
             driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/ul/li[6]/a').click()
-            driver.implicitly_wait(5)
+            driver.implicitly_wait(10)
 
             # 7월이동
             driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[1]/a[2]/img').click()
-            driver.implicitly_wait(5)
+            driver.implicitly_wait(10)
 
             # 날짜확인
             print("예약날짜 체크")
@@ -78,7 +78,7 @@ if checked_process == True:
                 # /html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[행]/div[2]/table/thead/tr/td[열]/span
                 # 첫째주 월요일 선택
                 driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{x}]/div[1]/table/tbody/tr/td[{y}]").click()
-                driver.implicitly_wait(5)
+                driver.implicitly_wait(10)
 
                 check_time = driver.find_element(By.CSS_SELECTOR, f"body > div > div > div > div:nth-child(3) > div:nth-child(2) > table > tbody > tr:nth-child({i}) > td:nth-child(4) > div").text
                 print(check_time)
@@ -104,8 +104,8 @@ if checked_process == True:
                     
                     # 예약신청
                     print("###최종신청###")
-                    driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button').click()
-                    driver.implicitly_wait(100)
+                    # driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button').click()
+                    # driver.implicitly_wait(100)
                 
                     print("###예약성공!!###")
                     reserved = True
