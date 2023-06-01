@@ -51,6 +51,8 @@ cycleTimeSet = 1 # delay time(초)
 x = 2 #1주/2주/3주/4주/5주
 y = 2 #월/화/수
 i = 10 # 시간대 선택 17시~21시(10번째 시간)
+reserve_year = config.get('futsal', 'reserve_year')
+reserve_month = config.get('futsal', 'reserve_month')
 if checked_process == True:
     while True:
         try:
@@ -71,7 +73,7 @@ if checked_process == True:
             check_date = driver.find_element(By.CSS_SELECTOR, f"body > div > div > div > div:nth-child(3) > div:nth-child(2) > div.schedule-box-wrap > div.calendar-box > div > div > div:nth-child(2) > div > div > div.card-header.d-flex.justify-content-around > h5").text
             print(check_date)
             
-            if config.get('futsal', 'reserve_month') in check_date: # 예약하고자 하는 달이 맞는지 확인
+            if f"{reserve_year}년 {reserve_month}월" in check_date: # 예약하고자 하는 달이 맞는지 확인
 
                 print("###예약오픈###")
 
