@@ -3,6 +3,7 @@
 
 config.ini 설정
 ```
+[futsal]
 url = http://www.futsalbase.com/login
 id = 아이디
 pwd = 비번
