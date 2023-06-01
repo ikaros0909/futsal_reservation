@@ -1,7 +1,11 @@
 # futsal_reservation
-예약
+# 예약
 
-
-url = 접속주소
+config.ini 설정
+```
+url = http://www.futsalbase.com/login
 id = 아이디
 pwd = 비번
+reserve_year = 2023
+reserve_month = 07
+```
