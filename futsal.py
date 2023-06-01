@@ -71,7 +71,7 @@ if checked_process == True:
             check_date = driver.find_element(By.CSS_SELECTOR, f"body > div > div > div > div:nth-child(3) > div:nth-child(2) > div.schedule-box-wrap > div.calendar-box > div > div > div:nth-child(2) > div > div > div.card-header.d-flex.justify-content-around > h5").text
             print(check_date)
             
-            if "2023년 07월" in check_date:
+            if config.get('futsal', 'reserve_month') in check_date: # 예약하고자 하는 달이 맞는지 확인
 
                 print("###예약오픈###")
 
