@@ -18,13 +18,13 @@ driver.find_element(By.ID, 'pwd').send_keys(config.get('futsal', 'pwd')) # 비�
 
 # 로그인
 driver.find_element(By.XPATH, '/html/body/div/div/div/section/div/div[2]/div[1]/div[2]/button').click()
-driver.implicitly_wait(5)
+driver.implicitly_wait(10)
 
 #공지 닫기
 driver.find_element(By.XPATH, '/html/body/div/div/div/div[3]/div/div/div/div[2]/button').click()
-driver.implicitly_wait(5)
+driver.implicitly_wait(10)
 driver.find_element(By.XPATH, '/html/body/div/div/div/div[3]/div/div/div/div[2]/button').click()
-driver.implicitly_wait(5)
+driver.implicitly_wait(10)
 
 current_time = datetime.datetime.now()
 last_day_of_month = datetime.datetime(current_time.year, current_time.month, 1) + datetime.timedelta(days=32) # 다음달 1일
@@ -53,6 +53,7 @@ y = 2 #월/화/수
 i = 10 # 시간대 선택 17시~21시(10번째 시간)
 reserve_year = config.get('futsal', 'reserve_year')
 reserve_month = config.get('futsal', 'reserve_month')
+
 if checked_process == True:
     while True:
         try:
@@ -80,9 +81,11 @@ if checked_process == True:
                 # /html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[행]/div[2]/table/thead/tr/td[열]/span
                 # 첫째주 월요일 선택
                 driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{x}]/div[1]/table/tbody/tr/td[{y}]").click()
-                driver.implicitly_wait(10)
+                driver.implicitly_wait(15)
 
                 check_time = driver.find_element(By.CSS_SELECTOR, f"body > div > div > div > div:nth-child(3) > div:nth-child(2) > table > tbody > tr:nth-child({i}) > td:nth-child(4) > div").text
+                driver.implicitly_wait(10)
+                
                 print(check_time)
                 if "예약가능" in check_time:
                     print("###시간가능###")
@@ -119,14 +122,15 @@ if checked_process == True:
                 
             else:
                 # 해당월 예약 불가능
+                print("###예약불가능!!###")
                 reserved = False
                 time.sleep(cycleTimeSet)
             
             if not reserved:
                 print("새로고침")
                 
-                # 예약현황/취소
-                driver.find_element(By.XPATH, '/html/body/div/div/div/section/div/ul/li[2]/a').click()
+                # 오시는길 페이지 이동
+                driver.find_element(By.XPATH, '/html/body/div/div/div/section/div/ul/li[4]/a').click()
                 driver.implicitly_wait(10)
                 
                 if y == 6:
@@ -145,3 +149,7 @@ if checked_process == True:
             print("예외가 발생했습니다:", e)
             reserved = False
             time.sleep(cycleTimeSet)
+            
+            # 홈으로 이동후 다시 시도
+            driver.get(config.get('futsal', 'url_home')) # 이동을 원하는 페이지 주소 
+            driver.implicitly_wait(15) # 페이지 다 뜰 때 까지 기다림
