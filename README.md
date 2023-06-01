@@ -1,2 +1,7 @@
 # futsal_reservation
-풋살경기장 예약
+예약
+
+
+url = 접속주소
+id = 아이디
+pwd = 비번
