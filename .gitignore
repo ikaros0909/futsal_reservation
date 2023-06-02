@@ -1,2 +1,5 @@
 *.ini
+build/
+dist/
+futsal.spec
 .vscode
