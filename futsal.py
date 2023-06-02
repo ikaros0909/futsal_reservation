@@ -30,9 +30,10 @@ driver.find_element(By.XPATH, '/html/body/div/div/div/div[3]/div/div/div/div[2]/
 driver.implicitly_wait(10)
 
 checked_process = False
+reserve_open = config.get('futsal', 'reserve_open')
 while True:
     current_time = datetime.datetime.now()
-    if current_time.day == 2:
+    if current_time.day == int(reserve_open):
         # 현재가 1일이거나, 매월 말일 자정을 넘겼을 때 수행할 작업
         checked_process = True
         print("신청기간입니다. 예약작업을 수행합니다.", current_time)
