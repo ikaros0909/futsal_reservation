@@ -33,7 +33,7 @@ last_day_of_month = last_day_of_month.replace(day=1) - datetime.timedelta(days=1
 checked_process = False
 while True:
     current_time = datetime.datetime.now()
-    if current_time.day == 1 or current_time > last_day_of_month.replace(hour=23, minute=59, second=59):
+    if current_time.day == 2 or current_time > last_day_of_month.replace(hour=23, minute=59, second=59):
         # 현재가 1일이거나, 매월 말일 자정을 넘겼을 때 수행할 작업
         checked_process = True
         print("매월 말일 자정을 넘겼습니다. 예약작업을 수행합니다.")
@@ -83,11 +83,14 @@ if checked_process == True:
                 driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{x}]/div[1]/table/tbody/tr/td[{y}]").click()
                 driver.implicitly_wait(15)
 
-                check_time = driver.find_element(By.CSS_SELECTOR, f"body > div > div > div > div:nth-child(3) > div:nth-child(2) > table > tbody > tr:nth-child({i}) > td:nth-child(4) > div").text
+                print(driver.find_element(By.ID, 'str').text) # 예약날짜
+                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[2]").text) # 예약시간
+                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[4]/div/span[4]").text) # 예약자 정보
+                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[4]/div/span[2]").text) # 예약여부
+                isReserveSet = driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[4]/div/span[2]").text
                 driver.implicitly_wait(10)
                 
-                print(check_time)
-                if "예약가능" in check_time:
+                if "예약가능" in isReserveSet:
                     print("###시간가능###")
                     driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[1]/label").click()
                     driver.implicitly_wait(10)
