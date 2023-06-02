@@ -113,9 +113,9 @@ if checked_process == True:
                     driver.implicitly_wait(10)
                     
                     # 예약신청
-                    # print("###최종신청###")
-                    # driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button').click()
-                    # driver.implicitly_wait(100)
+                    print("###최종신청###")
+                    driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button').click()
+                    driver.implicitly_wait(100)
                 
                     print("###예약성공!!###")
                     reserved = True
