@@ -50,9 +50,9 @@ cycleTimeSet = 1 # delay time(초)
 
 x = 2 #1주/2주/3주/4주/5주
 y = 2 #월/화/수
-i = 10 # 시간대 선택 17시~21시(10번째 시간)
 reserve_year = config.get('futsal', 'reserve_year')
 reserve_month = config.get('futsal', 'reserve_month')
+reserve_time = config.get('futsal', 'reserve_time') # 시간대 선택 17시~21시(10번째 시간)
 
 if checked_process == True:
     while True:
@@ -81,18 +81,20 @@ if checked_process == True:
                 # /html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[행]/div[2]/table/thead/tr/td[열]/span
                 # 첫째주 월요일 선택
                 driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{x}]/div[1]/table/tbody/tr/td[{y}]").click()
-                driver.implicitly_wait(15)
+                driver.implicitly_wait(50)
+                print("###날짜변경###")
+                time.sleep(cycleTimeSet)
 
                 print(driver.find_element(By.ID, 'str').text) # 예약날짜
-                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[2]").text) # 예약시간
-                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[4]/div/span[4]").text) # 예약자 정보
-                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[4]/div/span[2]").text) # 예약여부
-                isReserveSet = driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[4]/div/span[2]").text
+                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{reserve_time}]/td[2]").text) # 예약시간
+                print(driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{reserve_time}]/td[4]/div/span[4]").text) # 예약자 정보
+                isReserveSet = driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{reserve_time}]/td[4]/div/span[2]").text # 예약여부
                 driver.implicitly_wait(10)
+                print(isReserveSet)
                 
                 if "예약가능" in isReserveSet:
-                    print("###시간가능###")
-                    driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[1]/label").click()
+                    print("###해당시간 예약가능###")
+                    driver.find_element(By.XPATH, f"/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[{reserve_time}]/td[1]/label").click()
                     driver.implicitly_wait(10)
                     
                     # 다음단계
@@ -111,9 +113,9 @@ if checked_process == True:
                     driver.implicitly_wait(10)
                     
                     # 예약신청
-                    print("###최종신청###")
-                    driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button').click()
-                    driver.implicitly_wait(100)
+                    # print("###최종신청###")
+                    # driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button').click()
+                    # driver.implicitly_wait(100)
                 
                     print("###예약성공!!###")
                     reserved = True
