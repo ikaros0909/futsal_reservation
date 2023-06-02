@@ -33,7 +33,7 @@ last_day_of_month = last_day_of_month.replace(day=1) - datetime.timedelta(days=1
 checked_process = False
 while True:
     current_time = datetime.datetime.now()
-    if current_time.day == 2 or current_time > last_day_of_month.replace(hour=23, minute=59, second=59):
+    if current_time.day == 1 or current_time > last_day_of_month.replace(hour=23, minute=59, second=59):
         # 현재가 1일이거나, 매월 말일 자정을 넘겼을 때 수행할 작업
         checked_process = True
         print("매월 말일 자정을 넘겼습니다. 예약작업을 수행합니다.")
